@@ -60,37 +60,38 @@
     .left-content {
       display: flex;
       flex-direction: column;
-      width: 60%;
+      width: 55%;
 
       .heading {
         color: $primary-blue;
         margin-top: 100px;
-        font-size: 48px;
-        font-weight: 500;
+        font-size: 50px;
+        font-weight: bold;
         letter-spacing: 2px;
       }
 
       .subheading {
         color: $greenish-blue;
-        margin-top: 35px;
-        font-size: 30px;
+        margin-top: 45px;
+        font-size: 35px;
       }
 
       .whatwedo {
         color: $primary-grey;
-        width: 80%;
-        font-size: 20px;
-        margin-top: 30px;
+        width: 90%;
+        font-size: 25px;
+        margin-top: 50px;
       }
 
       .google-signin-section {
-        margin-top: 100px;
+        margin-top: 150px;
         cursor: pointer;
 
         .google-signin {
           font-size: 36px;
           display: flex;
           align-items: center;
+          color: $primary-black;
           .google-icon {
             width: 40px;
             height: 40px;
@@ -101,14 +102,14 @@
     }
 
     .right-content {
-      width: 40%;
+      width: 45%;
       .hero-image-container {
         width: 100%;
         height: 100%;
         .hero-image {
           width: 100%;
           height: auto;
-          margin-top: 50px;
+          margin-top: 100px;
         }
       }
     }
