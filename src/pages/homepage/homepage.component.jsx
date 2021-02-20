@@ -3,6 +3,7 @@ import "./homepage.styles.scss";
 import { ReactComponent as GoogleIcon } from "../../assets/google-icon.svg";
 import { ReactComponent as LeftArrow } from "../../assets/arrow-left.svg";
 import { ReactComponent as HomepageImage } from "../../assets/homepage-image.svg";
+import { signInWithGoogle } from "../../firebase/firebase.utils";
 
 const HomePage = () => {
   return (
@@ -26,7 +27,7 @@ const HomePage = () => {
             growing business. The service is entirely free for trial and light
             loads. Start being awesome from today.
           </div>
-          <div className="google-signin-section">
+          <div className="google-signin-section" onClick={signInWithGoogle}>
             <div className="google-signin">
               Continue With
               <GoogleIcon className="google-icon" />

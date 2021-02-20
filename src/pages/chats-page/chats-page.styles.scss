@@ -1,0 +1,18 @@
+.chats-page {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  background: #f2f2f2;
+
+  .main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .chatspage-image {
+      width: 50%;
+      height: auto;
+    }
+  }
+}
