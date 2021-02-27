@@ -21,7 +21,23 @@ export const auth = firebase.auth();
 // Selecting google for authentication
 export const googleProvider = new firebase.auth.GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: "select_account" });
-export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
+export const signInWithGoogle = async () => {
+  const { user } = await auth.signInWithPopup(googleProvider);
+
+  // returning the userAuth
+  return user;
+};
+
+// checking user session in a promise based syntax as required by the redux-sagas
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribeFromAuth = auth.onAuthStateChanged((userAuth) => {
+      // stop listenning to firestore the moment userAuth is get
+      unsubscribeFromAuth();
+      resolve(userAuth);
+    }, reject);
+  });
+};
 
 // Handling Firestore Storage
 export const firestore = firebase.firestore();

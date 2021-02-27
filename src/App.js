@@ -1,36 +1,18 @@
 import { useEffect, useState } from "react";
+import { connect } from "react-redux";
 import { Redirect, Route, Switch } from "react-router-dom";
+import { createStructuredSelector } from "reselect";
 import "./App.scss";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import ChatsPage from "./pages/chats-page/chats-page.component";
 import HomePage from "./pages/homepage/homepage.component";
+import { checkUserSession } from "./redux/user/user.actions";
+import { selectCurrentUser } from "./redux/user/user.selectors";
 
-function App() {
-  const [user, setUser] = useState(null);
-
-  let unsubscribeFromAuth = null;
-
+const App = ({ currentUser, checkUserSession }) => {
   useEffect(() => {
-    unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-      if (userAuth) {
-        const userRef = createUserProfileDocument(userAuth);
-
-        // setting the state from newly created user;
-        (await userRef).onSnapshot((snapShot) => {
-          setUser({
-            ...snapShot.data(),
-          });
-          console.log(user);
-        });
-      } else {
-        setUser(userAuth);
-      }
-    });
-
-    return () => {
-      unsubscribeFromAuth();
-    };
-  }, []);
+    checkUserSession();
+  }, [checkUserSession]);
 
   return (
     <div className="App">
@@ -38,18 +20,24 @@ function App() {
         <Route
           exact
           path="/"
-          render={() => (user ? <Redirect to="/chats" /> : <HomePage />)}
+          render={() => (currentUser ? <Redirect to="/chats" /> : <HomePage />)}
         />
         <Route
           exact
           path="/chats"
-          render={() =>
-            !user ? <Redirect to="/" /> : <ChatsPage user={user} />
-          }
+          render={() => (!currentUser ? <Redirect to="/" /> : <ChatsPage />)}
         />
       </Switch>
     </div>
   );
-}
+};
 
-export default App;
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  checkUserSession: () => dispatch(checkUserSession()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

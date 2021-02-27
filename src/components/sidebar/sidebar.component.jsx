@@ -1,10 +1,10 @@
 import "./sidebar.styles.scss";
 import SidebarTopSection from "../sidebar-top-section/sidebar-top-section.component";
 
-const Sidebar = ({ user }) => {
+const Sidebar = () => {
   return (
     <div className="sidebar">
-      <SidebarTopSection user={user} />
+      <SidebarTopSection />
     </div>
   );
 };

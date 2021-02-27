@@ -3,9 +3,10 @@ import "./homepage.styles.scss";
 import { ReactComponent as GoogleIcon } from "../../assets/google-icon.svg";
 import { ReactComponent as LeftArrow } from "../../assets/arrow-left.svg";
 import { ReactComponent as HomepageImage } from "../../assets/homepage-image.svg";
-import { signInWithGoogle } from "../../firebase/firebase.utils";
+import { signInStart } from "../../redux/user/user.actions";
+import { connect } from "react-redux";
 
-const HomePage = () => {
+const HomePage = ({ signInStart }) => {
   return (
     <div className="homepage">
       <div className="header">
@@ -27,7 +28,7 @@ const HomePage = () => {
             growing business. The service is entirely free for trial and light
             loads. Start being awesome from today.
           </div>
-          <div className="google-signin-section" onClick={signInWithGoogle}>
+          <div className="google-signin-section" onClick={signInStart}>
             <div className="google-signin">
               Continue With
               <GoogleIcon className="google-icon" />
@@ -45,4 +46,8 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+const mapDispatchToProps = (dispatch) => ({
+  signInStart: () => dispatch(signInStart()),
+});
+
+export default connect(null, mapDispatchToProps)(HomePage);

@@ -2,10 +2,10 @@ import Sidebar from "../../components/sidebar/sidebar.component";
 import "./chats-page.styles.scss";
 import { ReactComponent as ChatsPageImage } from "../../assets/chatspage-image.svg";
 
-const ChatsPage = ({ user }) => {
+const ChatsPage = () => {
   return (
     <div className="chats-page">
-      <Sidebar user={user} />
+      <Sidebar />
       <div className="main">
         <ChatsPageImage className="chatspage-image" />
       </div>
