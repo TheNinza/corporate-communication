@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { connect } from "react-redux";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
 import "./App.scss";
-import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import ChatsPage from "./pages/chats-page/chats-page.component";
 import HomePage from "./pages/homepage/homepage.component";
 import { checkUserSession } from "./redux/user/user.actions";

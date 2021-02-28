@@ -20,7 +20,7 @@ const SidebarTopSection = ({
     <div className="sidebar-top-section">
       <div className="user-section">
         <div className="profile-image-container">
-          <img className="profile-image" src={photoURL} alt="profile-image" />
+          <img className="profile-image" src={photoURL} alt="profile" />
         </div>
         <div className="welcome-and-signout">
           <div className="welcome">Welcome</div>
