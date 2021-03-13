@@ -5,15 +5,23 @@ import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { selectCurrentUser } from "../../redux/user/user.selectors";
 import { signOutStart } from "../../redux/user/user.actions";
+import { addChatroom } from "../../redux/chatrooms/chatroom.actions";
 
 const SidebarTopSection = ({
-  currentUser: { displayName, photoURL },
+  currentUser: { displayName, photoURL, uid },
   signOutStart,
+  addChatroom,
 }) => {
   const createNewChat = () => {
     // checking if the prompt working.. full functionality will be added later.
     const name = prompt("Give this chat a name");
-    console.log(name);
+    addChatroom({
+      chatRoomName: name,
+      admin: uid,
+      description: "",
+      authorisedUsers: [],
+      messages: [],
+    });
   };
 
   return (
@@ -44,6 +52,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = (dispatch) => ({
   signOutStart: () => dispatch(signOutStart()),
+  addChatroom: (name) => dispatch(addChatroom(name)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SidebarTopSection);

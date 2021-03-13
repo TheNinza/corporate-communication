@@ -78,4 +78,29 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
+// Hendling chatrooms
+
+// Add Chatroom
+
+export const createChatroomDocument = async (chatRoom) => {
+  if (!chatRoom) return;
+
+  // returning a new reference in the chatrooms collection
+  const chatroomRef = firestore.collection("chatrooms").doc();
+
+  // getting server time for an internet synchronised time
+  const createdAt = firebase.firestore.Timestamp.now();
+  try {
+    await chatroomRef.set({
+      ...chatRoom,
+      createdAt,
+      chatroomId: chatroomRef.id,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+
+  return chatroomRef;
+};
+
 export default firebase;
