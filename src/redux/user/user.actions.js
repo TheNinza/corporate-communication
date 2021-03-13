@@ -5,9 +5,8 @@ export const signInStart = () => ({
   type: UserActionTypes.SIGN_IN_START,
 });
 
-export const signInSuccess = (user) => ({
+export const signInSuccess = () => ({
   type: UserActionTypes.SIGN_IN_SUCCESS,
-  payload: user,
 });
 
 export const signInFailure = (error) => ({
@@ -34,4 +33,14 @@ export const setUserToNull = () => ({
 
 export const checkUserSession = () => ({
   type: UserActionTypes.CHECK_USER_SESSION,
+});
+
+export const updateLocalUser = (user) => ({
+  type: UserActionTypes.UPDATE_LOCAL_USER,
+  payload: user,
+});
+
+export const updateUserAdminChats = (id) => ({
+  type: UserActionTypes.UPDATE_USER_ADMINCHATS,
+  payload: id,
 });

@@ -11,6 +11,7 @@ import {
   signInSuccess,
   signOutFailure,
   signOutSuccess,
+  updateLocalUser,
 } from "./user.actions";
 import UserActionTypes from "./user.types";
 
@@ -27,7 +28,8 @@ export function* getSnapshotFromUserAuth(userAuth, additionalData) {
     const userSnapshot = yield userRef.get();
 
     // invoking success call
-    yield put(signInSuccess({ ...userSnapshot.data() }));
+    yield put(signInSuccess());
+    yield put(updateLocalUser({ ...userSnapshot.data() }));
   } catch (error) {
     // invoking failure call
     yield put(signInFailure(error));
