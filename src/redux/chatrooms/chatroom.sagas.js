@@ -3,6 +3,7 @@ import {
   createChatroomDocument,
   // firestore,
 } from "../../firebase/firebase.utils";
+import { updateUserAdminChats } from "../user/user.actions";
 import { selectCurrentUser } from "../user/user.selectors";
 import {
   chatroomModificationFailure,
@@ -35,7 +36,8 @@ export function* addChatroom({ payload }) {
   const currentUser = yield select(selectCurrentUser);
   if (currentUser) {
     try {
-      yield createChatroomDocument(payload);
+      const { id } = yield createChatroomDocument(payload);
+      yield put(updateUserAdminChats({ id }));
     } catch (error) {
       yield console.log(error);
       yield put(chatroomModificationFailure(error));

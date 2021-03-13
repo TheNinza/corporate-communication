@@ -1,7 +1,8 @@
-import { takeLatest, put, all, call } from "redux-saga/effects";
+import { takeLatest, put, all, call, select } from "redux-saga/effects";
 import {
   auth,
   createUserProfileDocument,
+  firestore,
   getCurrentUser,
   signInWithGoogle,
 } from "../../firebase/firebase.utils";
@@ -13,6 +14,7 @@ import {
   signOutSuccess,
   updateLocalUser,
 } from "./user.actions";
+import { selectCurrentUser } from "./user.selectors";
 import UserActionTypes from "./user.types";
 
 // Handling signIn with google
@@ -85,6 +87,36 @@ export function* onSignOutStart() {
   yield takeLatest(UserActionTypes.SIGN_OUT_START, signOut);
 }
 
+// Handling modifying data for the user
+
+// handling addition of adminchatrooms
+export function* updateUserAdminChats({ payload: { id } }) {
+  const currentUser = yield select(selectCurrentUser);
+  const { uid, adminOfChatRooms, authorisedChatRooms } = currentUser;
+  const userRef = firestore.collection("users").doc(uid);
+  const userSnapshot = yield userRef.get();
+  if (userSnapshot.exists) {
+    try {
+      yield userRef.update({
+        adminOfChatRooms: [...adminOfChatRooms, id],
+        authorisedChatRooms: [...authorisedChatRooms, id],
+      });
+      const newUserRef = firestore.collection("users").doc(uid);
+      const newSnapShot = yield newUserRef.get();
+      yield put(updateLocalUser({ ...newSnapShot.data() }));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+
+export function* onUpdateUserAdminChats() {
+  yield takeLatest(
+    UserActionTypes.UPDATE_USER_ADMINCHATS,
+    updateUserAdminChats
+  );
+}
+
 // creating a local saga from all the different sagas and exporting
 
 export function* userSagas() {
@@ -92,5 +124,6 @@ export function* userSagas() {
     call(onSignInStart),
     call(onCheckUserSession),
     call(onSignOutStart),
+    call(onUpdateUserAdminChats),
   ]);
 }

@@ -15,13 +15,15 @@ const SidebarTopSection = ({
   const createNewChat = () => {
     // checking if the prompt working.. full functionality will be added later.
     const name = prompt("Give this chat a name");
-    addChatroom({
-      chatRoomName: name,
-      admin: uid,
-      description: "",
-      authorisedUsers: [],
-      messages: [],
-    });
+    if (name?.length) {
+      addChatroom({
+        chatRoomName: name,
+        admin: uid,
+        description: "",
+        authorisedUsers: [],
+        messages: [],
+      });
+    }
   };
 
   return (
