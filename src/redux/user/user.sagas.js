@@ -6,6 +6,7 @@ import {
   getCurrentUser,
   signInWithGoogle,
 } from "../../firebase/firebase.utils";
+import { fetchChatroomsStart } from "../chatrooms/chatroom.actions";
 import {
   setUserToNull,
   signInFailure,
@@ -32,6 +33,9 @@ export function* getSnapshotFromUserAuth(userAuth, additionalData) {
     // invoking success call
     yield put(signInSuccess());
     yield put(updateLocalUser({ ...userSnapshot.data() }));
+
+    // starting fetching chatrooms for the user as the user signs in
+    yield put(fetchChatroomsStart());
   } catch (error) {
     // invoking failure call
     yield put(signInFailure(error));

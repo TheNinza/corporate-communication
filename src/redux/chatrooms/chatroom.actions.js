@@ -7,7 +7,7 @@ export const fetchChatroomsStart = () => ({
 });
 
 export const fetchChatroomsSuccess = (chatrooms) => ({
-  type: ChatRoomActionTypes.CHATROOMS_MODIFICATION_SUCCESS,
+  type: ChatRoomActionTypes.FETCH_CHATROOMS_SUCCESS,
   payload: chatrooms,
 });
 

@@ -103,4 +103,14 @@ export const createChatroomDocument = async (chatRoom) => {
   return chatroomRef;
 };
 
+// fetching Chatrooms
+export const firebaseFetchChatRoom = async (chatroom) => {
+  const chatroomRef = firestore.collection("chatrooms").doc(chatroom);
+  const snapShot = await chatroomRef.get();
+  if (snapShot.exists) {
+    const data = snapShot.data();
+    return data;
+  }
+};
+
 export default firebase;
