@@ -108,6 +108,7 @@ export function* updateUserAdminChats({ payload: { id } }) {
       const newUserRef = firestore.collection("users").doc(uid);
       const newSnapShot = yield newUserRef.get();
       yield put(updateLocalUser({ ...newSnapShot.data() }));
+      yield put(fetchChatroomsStart());
     } catch (error) {
       console.log(error);
     }
