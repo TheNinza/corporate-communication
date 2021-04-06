@@ -4,7 +4,7 @@ const INITIAL_STATE = {
   chatrooms: [],
   error: null,
   activeChatroom: null,
-  activeChatroomMessages: null,
+  activeChatroomMessages: [],
 };
 
 const chatroomReducer = (state = INITIAL_STATE, action) => {
@@ -21,6 +21,19 @@ const chatroomReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         error: null,
+      };
+
+    case ChatRoomActionTypes.CHANGE_ACTIVE_CHATROOM:
+      return {
+        ...state,
+        activeChatroomMessages: [],
+        activeChatroom: { ...action.payload },
+      };
+
+    case ChatRoomActionTypes.SET_ACTIVE_CHATROOM_MESSAGES:
+      return {
+        ...state,
+        activeChatroomMessages: [...action.payload],
       };
 
     default:

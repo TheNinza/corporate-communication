@@ -1,8 +1,8 @@
 import "./chatroom.styles.scss";
 
-const Chatroom = ({ chatRoomName }) => {
+const Chatroom = ({ chatRoomName, onClick }) => {
   return (
-    <div className="chatroom">
+    <div onClick={onClick} className="chatroom">
       <div className="chatroom-name">{chatRoomName}</div>
       <div className="line" />
     </div>

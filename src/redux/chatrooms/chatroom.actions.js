@@ -34,3 +34,13 @@ export const chatroomModificationFailure = (error) => ({
   type: ChatRoomActionTypes.CHATROOM_MODIFICATION_FAILURE,
   payload: error,
 });
+
+export const changeActiveChatroom = (chatroom) => ({
+  type: ChatRoomActionTypes.CHANGE_ACTIVE_CHATROOM,
+  payload: chatroom,
+});
+
+export const setActiveChatroomMessages = (messages) => ({
+  type: ChatRoomActionTypes.SET_ACTIVE_CHATROOM_MESSAGES,
+  payload: messages,
+});
