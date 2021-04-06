@@ -1,14 +1,19 @@
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import { selectActiveChatRoom } from "../../redux/chatrooms/chatroom.selectors";
+import ChatboxHeader from "../chatbox-header/chatbox-header.component";
+import MessageBox from "../message-box/message-box.component";
+import MessageInput from "../message-input/message-input.component";
 import "./chatbox.styles.scss";
 
 const ChatBox = ({ activeChatroom }) => {
-  const { chatroomId } = activeChatroom;
+  const { chatRoomName } = activeChatroom;
 
   return (
     <div className="chatbox">
-      <h1>Helloooo {chatroomId}</h1>
+      <ChatboxHeader chatRoomName={chatRoomName} />
+      <MessageBox />
+      <MessageInput />
     </div>
   );
 };
