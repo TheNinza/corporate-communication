@@ -26,6 +26,12 @@
       outline: none;
       border: none;
       background: transparent;
+      cursor: pointer;
+      height: 60%;
+
+      svg {
+        height: 100%;
+      }
     }
   }
 }
