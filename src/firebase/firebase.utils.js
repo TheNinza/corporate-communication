@@ -85,20 +85,53 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 export const createChatroomDocument = async (chatRoom) => {
   if (!chatRoom) return;
 
-  // returning a new reference in the chatrooms collection
-  const chatroomRef = firestore.collection("chatrooms").doc();
+  // creating batch for transactions;
 
-  // getting server time for an internet synchronised time
-  const createdAt = firebase.firestore.Timestamp.now();
+  const batch = firestore.batch();
+  const chatroomRef = firestore.collection("chatrooms").doc();
+  const messageRef = firestore.collection("messages").doc(chatroomRef.id);
+
   try {
-    await chatroomRef.set({
+    // getting server time for an internet synchronised time
+    const createdAt = firebase.firestore.Timestamp.now();
+    // returning a new reference in the chatrooms collection
+
+    batch.set(chatroomRef, {
       ...chatRoom,
       createdAt,
       chatroomId: chatroomRef.id,
     });
+
+    // creating message document for the chatroom
+
+    batch.set(messageRef, {
+      messages: [],
+      chatroomId: chatroomRef.id,
+    });
+
+    await batch.commit();
   } catch (error) {
     console.log(error);
   }
+
+  // // returning a new reference in the chatrooms collection
+  // const chatroomRef = firestore.collection("chatrooms").doc();
+
+  // // creating message document for the chatroom
+
+  // const messageRef = firestore.collection("messages").doc(chatroomRef.id);
+
+  // // getting server time for an internet synchronised time
+  // const createdAt = firebase.firestore.Timestamp.now();
+  // try {
+  //   await chatroomRef.set({
+  //     ...chatRoom,
+  //     createdAt,
+  //     chatroomId: chatroomRef.id,
+  //   });
+  // } catch (error) {
+  //   console.log(error);
+  // }
 
   return chatroomRef;
 };
