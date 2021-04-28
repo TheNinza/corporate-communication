@@ -15,7 +15,7 @@ const MessageBox = ({ messages }) => {
   return (
     <div className="message-box">
       {messages.map((message, index) => (
-        <Message message={message} />
+        <Message message={message} key={index} />
       ))}
       <div ref={dummy}></div>
     </div>
