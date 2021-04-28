@@ -13,6 +13,7 @@ In the project directory, you can run `npm install`. All dependencies must be in
 ### To Start
 
 Using the script `npm start` will run the app in the development mode. If any edits are made, the page will reload.
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ### To Run
 
