@@ -1,11 +1,22 @@
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { selectCurrentChatroomMessages } from "../../redux/messages/messages.selectors";
 import "./message-box.styles.scss";
 
-const MessageBox = () => {
+const MessageBox = ({ messages }) => {
   return (
     <div className="message-box">
-      <div className="test">this is where messages will appear</div>
+      {messages.map(({ content }, index) => (
+        <div className="message" key={index}>
+          {content}
+        </div>
+      ))}
     </div>
   );
 };
 
-export default MessageBox;
+const mapStateToProps = createStructuredSelector({
+  messages: selectCurrentChatroomMessages,
+});
+
+export default connect(mapStateToProps)(MessageBox);

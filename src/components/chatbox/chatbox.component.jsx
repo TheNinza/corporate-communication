@@ -1,19 +1,38 @@
+import { useEffect } from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
+import { firestore } from "../../firebase/firebase.utils";
 import { selectActiveChatRoom } from "../../redux/chatrooms/chatroom.selectors";
+import { updateMessages } from "../../redux/messages/messages.actions";
 import ChatboxHeader from "../chatbox-header/chatbox-header.component";
 import MessageBox from "../message-box/message-box.component";
 import MessageInput from "../message-input/message-input.component";
 import "./chatbox.styles.scss";
 
-const ChatBox = ({ activeChatroom }) => {
-  const { chatRoomName } = activeChatroom;
+const ChatBox = ({ activeChatroom, updateMessages }) => {
+  const { chatRoomName, chatroomId } = activeChatroom;
+
+  let unsubscribe = null;
+
+  useEffect(() => {
+    unsubscribe = firestore
+      .collection("messages")
+      .doc(chatroomId)
+      .onSnapshot((snapShot) => {
+        updateMessages(snapShot.data().messages);
+      });
+
+    return () => {
+      console.log("unsubscibed");
+      unsubscribe();
+    };
+  }, [chatroomId]);
 
   return (
     <div className="chatbox">
       <ChatboxHeader chatRoomName={chatRoomName} />
       <MessageBox />
-      <MessageInput />
+      <MessageInput chatroomId={chatroomId} />
     </div>
   );
 };
@@ -22,4 +41,8 @@ const mapStateToProps = createStructuredSelector({
   activeChatroom: selectActiveChatRoom,
 });
 
-export default connect(mapStateToProps)(ChatBox);
+const mapDispatchToProps = (dispatch) => ({
+  updateMessages: (messageArray) => dispatch(updateMessages(messageArray)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatBox);

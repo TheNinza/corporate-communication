@@ -1,13 +1,44 @@
 import "./message-input.styles.scss";
 import { ReactComponent as SendButton } from "../../assets/send-button.svg";
 import { useState } from "react";
+import firebase, { firestore } from "../../firebase/firebase.utils";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { selectCurrentUserId } from "../../redux/user/user.selectors";
 
-const MessageInput = () => {
+const MessageInput = ({ chatroomId, currentUserId }) => {
   const [message, setMessage] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(e);
+
+    const messagesRef = firestore.doc(`messages/${chatroomId}`);
+    const snapShot = await messagesRef.get();
+
+    if (!snapShot.exists) {
+      console.log("messages Ref doesn't exists");
+      return;
+    }
+
+    try {
+      const createdAt = firebase.firestore.Timestamp.now();
+
+      const messageBody = {
+        createdAt,
+        sentByUser: currentUserId,
+        sentInChatroom: chatroomId,
+        content: message,
+        type: "text",
+      };
+
+      await messagesRef.update({
+        messages: firebase.firestore.FieldValue.arrayUnion(messageBody),
+      });
+
+      setMessage("");
+    } catch (error) {
+      console.log("Error sending messages", error);
+    }
   };
 
   return (
@@ -28,4 +59,8 @@ const MessageInput = () => {
   );
 };
 
-export default MessageInput;
+const mapStateToProps = createStructuredSelector({
+  currentUserId: selectCurrentUserId,
+});
+
+export default connect(mapStateToProps)(MessageInput);
