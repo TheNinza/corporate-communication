@@ -13,3 +13,8 @@ export const selectActiveChatRoom = (chatroomIdUrlParam) =>
       if (array[i].chatroomId === chatroomIdUrlParam) return array[i];
     }
   });
+
+export const selectSetActiveChatRoom = createSelector(
+  [selectChatrooms],
+  (chatrooms) => chatrooms.activeChatroom
+);

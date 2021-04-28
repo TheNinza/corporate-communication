@@ -1,0 +1,45 @@
+@import "../../styles/default-styles";
+
+.box .profile-image-container {
+  overflow: hidden;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  align-self: flex-start;
+
+  .profile-image {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.message-content {
+  padding: 10px 15px;
+  border-radius: 25px;
+  color: white;
+  max-width: 40vw;
+  overflow-wrap: break-word;
+  margin: 0 15px;
+}
+
+.right-box {
+  align-self: flex-end;
+  margin: 10px 0;
+
+  display: flex;
+
+  .message-content {
+    background: $greenish-blue;
+  }
+}
+
+.left-box {
+  align-self: flex-start;
+  margin: 10px 0;
+
+  display: flex;
+
+  .message-content {
+    background: $primary-blue;
+  }
+}
