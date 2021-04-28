@@ -3,13 +3,11 @@ import "./chats-page.styles.scss";
 import { ReactComponent as ChatsPageImage } from "../../assets/chatspage-image.svg";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-import { selectActiveChatRoom } from "../../redux/chatrooms/chatroom.selectors";
 import ChatBox from "../../components/chatbox/chatbox.component";
 import { selectCurrentUser } from "../../redux/user/user.selectors";
-import { useEffect } from "react";
 import { Route } from "react-router";
 
-const ChatsPage = ({ activeChatroom, currentUser, match }) => {
+const ChatsPage = ({ currentUser, match }) => {
   return (
     <div className="chats-page">
       {currentUser ? (
@@ -21,12 +19,6 @@ const ChatsPage = ({ activeChatroom, currentUser, match }) => {
             </Route>
 
             <Route path={`${match.path}/:chatroomId`} component={ChatBox} />
-
-            {/* {activeChatroom?.chatroomId ? (
-              <ChatBox />
-            ) : (
-              <ChatsPageImage className="chatspage-image" />
-            )} */}
           </div>
         </>
       ) : (
@@ -37,7 +29,6 @@ const ChatsPage = ({ activeChatroom, currentUser, match }) => {
 };
 
 const mapStateToProps = createStructuredSelector({
-  activeChatroom: selectActiveChatRoom,
   currentUser: selectCurrentUser,
 });
 

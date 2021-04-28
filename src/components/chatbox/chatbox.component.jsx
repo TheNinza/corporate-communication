@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
-import { createStructuredSelector } from "reselect";
 import { firestore } from "../../firebase/firebase.utils";
 import { selectActiveChatRoom } from "../../redux/chatrooms/chatroom.selectors";
 import { updateMessages } from "../../redux/messages/messages.actions";

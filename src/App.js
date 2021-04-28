@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
-import { Redirect, Route, Switch, useHistory } from "react-router-dom";
+import { Route, Switch, useHistory } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
 import "./App.scss";
 import ChatsPage from "./pages/chats-page/chats-page.component";
@@ -18,7 +18,7 @@ const App = ({ currentUser, checkUserSession }) => {
   useEffect(() => {
     if (!currentUser) history.push("/");
     else history.push("/chats");
-  }, [currentUser]);
+  }, [currentUser, history]);
 
   return (
     <div className="App">
