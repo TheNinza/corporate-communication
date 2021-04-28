@@ -7,8 +7,11 @@ import { ReactComponent as AddUser } from "../../assets/addUser.svg";
 import { useEffect, useState } from "react";
 import firebase, { firestore } from "../../firebase/firebase.utils";
 import ChatroomUser from "../chatroom-user/chatroom-user.component";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { selectCurrentUserId } from "../../redux/user/user.selectors";
 
-const ChatroomSettings = ({ setHidden, activeChatroom }) => {
+const ChatroomSettings = ({ setHidden, activeChatroom, currentUserId }) => {
   const [liveChatroom, setLiveChatroom] = useState({});
 
   let unsubscribe;
@@ -77,17 +80,16 @@ const ChatroomSettings = ({ setHidden, activeChatroom }) => {
           <CrossIcon />
         </div>
         <div className="settings-heading-title">Group Info</div>
-        {/* <div className="delete-icon">
-          <DeleteIcon />
-        </div> */}
       </div>
 
       <div className="chatroom-description">
         <div className="controlls">
           <div className="title">Description</div>
-          <div className="edit" onClick={editDescription}>
-            <EditIcon />
-          </div>
+          {currentUserId === activeChatroom.admin && (
+            <div className="edit" onClick={editDescription}>
+              <EditIcon />
+            </div>
+          )}
         </div>
 
         <div className="description-content">{liveChatroom?.description}</div>
@@ -96,9 +98,11 @@ const ChatroomSettings = ({ setHidden, activeChatroom }) => {
       <div className="chatroom-users">
         <div className="controlls">
           <div className="title">Users</div>
-          <div className="edit" onClick={addNewUser}>
-            <AddUser />
-          </div>
+          {currentUserId === activeChatroom.admin && (
+            <div className="edit" onClick={addNewUser}>
+              <AddUser />
+            </div>
+          )}
         </div>
 
         <div className="user-content">
@@ -115,4 +119,8 @@ const ChatroomSettings = ({ setHidden, activeChatroom }) => {
   );
 };
 
-export default ChatroomSettings;
+const mapStateToProps = createStructuredSelector({
+  currentUserId: selectCurrentUserId,
+});
+
+export default connect(mapStateToProps)(ChatroomSettings);
