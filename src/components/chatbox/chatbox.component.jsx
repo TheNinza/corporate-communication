@@ -12,6 +12,8 @@ import "./chatbox.styles.scss";
 const ChatBox = ({ activeChatroom, updateMessages }) => {
   const { chatRoomName, chatroomId } = activeChatroom;
 
+  // console.log(activeChatroom);
+
   let unsubscribe = null;
 
   useEffect(() => {
@@ -37,8 +39,8 @@ const ChatBox = ({ activeChatroom, updateMessages }) => {
   );
 };
 
-const mapStateToProps = createStructuredSelector({
-  activeChatroom: selectActiveChatRoom,
+const mapStateToProps = (state, ownProps) => ({
+  activeChatroom: selectActiveChatRoom(ownProps.match.params.chatroomId)(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -7,7 +7,9 @@ export const selectAuthorisedChatrooms = createSelector(
   (chatrooms) => chatrooms.chatrooms
 );
 
-export const selectActiveChatRoom = createSelector(
-  [selectChatrooms],
-  (chatrooms) => chatrooms.activeChatroom
-);
+export const selectActiveChatRoom = (chatroomIdUrlParam) =>
+  createSelector([selectAuthorisedChatrooms], (array) => {
+    for (let i = 0; i < array.length; i++) {
+      if (array[i].chatroomId === chatroomIdUrlParam) return array[i];
+    }
+  });

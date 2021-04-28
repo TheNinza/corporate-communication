@@ -1,4 +1,5 @@
 import { connect } from "react-redux";
+import { useHistory } from "react-router";
 import { createStructuredSelector } from "reselect";
 import { changeActiveChatroom } from "../../redux/chatrooms/chatroom.actions";
 import { selectAuthorisedChatrooms } from "../../redux/chatrooms/chatroom.selectors";
@@ -9,8 +10,11 @@ const SidebarBottomSection = ({
   authorisedChatrooms,
   changeActiveChatroom,
 }) => {
+  const history = useHistory();
+
   const onChatroomClick = (chatroom) => {
     changeActiveChatroom(chatroom);
+    history.push(`/chats/${chatroom.chatroomId}`);
   };
 
   return (
