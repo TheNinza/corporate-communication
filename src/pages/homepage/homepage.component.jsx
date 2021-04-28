@@ -11,11 +11,16 @@ const HomePage = ({ signInStart }) => {
     <div className="homepage">
       <div className="header">
         <div className="header-title">corporate-systems</div>
-        <div className="burger-menu">
+        <a
+          href={"https://github.com/TheNinza/corporate-communication/"}
+          target="_blank"
+          rel="noreferrer"
+          className="burger-menu"
+        >
           <div className="line1" />
           <div className="line2" />
           <div className="line3" />
-        </div>
+        </a>
       </div>
       <div className="homepage-content">
         <div className="left-content">
