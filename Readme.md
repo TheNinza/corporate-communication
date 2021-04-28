@@ -8,20 +8,20 @@ Corporate Communication Software is a web-based application that provides a secu
 
 ### To Install
 
-In the project directory, you can run `npm install`. All dependencies must be installed. This assumes npm as your packet manager. 
+In the project directory, you can run `npm install`. All dependencies must be installed. This assumes npm as your packet manager.
 
 ### To Start
 
-Using the script `npm start` will run the app in the development mode.  If any edits are made, the page will reload.
-
+Using the script `npm start` will run the app in the development mode. If any edits are made, the page will reload.
 
 ### To Run
 
 To run, use `npm run build` which creates a `build` directory with a production build of this app. It correctly bundles React in production mode and optimizes the build for the best performance. Then, this app is ready to be deployed!
 
-
 ## Packages
+
 A short description of each package used has been provided here:
+
 ```
     "firebase"
       Provides the tools and infrastructure needed. This package supports web(browser), mobile-web, and server(Node.js) clients.
