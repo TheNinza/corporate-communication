@@ -20,7 +20,7 @@ const SidebarTopSection = ({
         chatRoomName: name,
         admin: uid,
         description: "",
-        authorisedUsers: [],
+        authorisedUsers: [uid],
         messages: [],
       });
     }

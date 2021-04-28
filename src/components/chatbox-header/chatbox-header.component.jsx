@@ -2,11 +2,11 @@ import "./chatbox-header.styles.scss";
 
 import { ReactComponent as InfoIcon } from "../../assets/info-icon.svg";
 
-const ChatboxHeader = ({ chatRoomName }) => {
+const ChatboxHeader = ({ chatRoomName, setHidden }) => {
   return (
     <div className="chatbox-header">
       <div className="chatbox-title">{chatRoomName}</div>
-      <InfoIcon />
+      <InfoIcon onClick={() => setHidden(false)} />
     </div>
   );
 };

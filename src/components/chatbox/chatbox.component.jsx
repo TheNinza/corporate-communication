@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { firestore } from "../../firebase/firebase.utils";
 import { selectActiveChatRoom } from "../../redux/chatrooms/chatroom.selectors";
 import { updateMessages } from "../../redux/messages/messages.actions";
 import ChatboxHeader from "../chatbox-header/chatbox-header.component";
+import ChatroomSettings from "../chatroom-settings/chatroom-settings.component";
 import MessageBox from "../message-box/message-box.component";
 import MessageInput from "../message-input/message-input.component";
 import "./chatbox.styles.scss";
@@ -12,6 +13,8 @@ const ChatBox = ({ activeChatroom, updateMessages }) => {
   const { chatRoomName, chatroomId } = activeChatroom;
 
   // console.log(activeChatroom);
+
+  const [isControlHidden, setHidden] = useState(true);
 
   let unsubscribe = null;
 
@@ -31,9 +34,19 @@ const ChatBox = ({ activeChatroom, updateMessages }) => {
 
   return (
     <div className="chatbox">
-      <ChatboxHeader chatRoomName={chatRoomName} />
-      <MessageBox />
-      <MessageInput chatroomId={chatroomId} />
+      <div className="main-container">
+        <ChatboxHeader chatRoomName={chatRoomName} setHidden={setHidden} />
+        <MessageBox />
+        <MessageInput chatroomId={chatroomId} />
+      </div>
+
+      {!isControlHidden && (
+        <ChatroomSettings
+          activeChatroom={activeChatroom}
+          isControlHidden={isControlHidden}
+          setHidden={setHidden}
+        />
+      )}
     </div>
   );
 };
