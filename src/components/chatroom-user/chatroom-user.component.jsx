@@ -1,12 +1,18 @@
 import "./chatroom-user.styles.scss";
 import { ReactComponent as DeleteIcon } from "../../assets/deleteIcon.svg";
 import { useEffect, useState } from "react";
-import { firestore } from "../../firebase/firebase.utils";
+import firebase, { firestore } from "../../firebase/firebase.utils";
 import { selectCurrentUserId } from "../../redux/user/user.selectors";
 import { createStructuredSelector } from "reselect";
 import { connect } from "react-redux";
+import { selectSetActiveChatRoom } from "../../redux/chatrooms/chatroom.selectors";
 
-const ChatroomUser = ({ userId, admin, currentUserId }) => {
+const ChatroomUser = ({
+  userId,
+  admin,
+  currentUserId,
+  activeChatroom: { chatroomId },
+}) => {
   const [user, setUser] = useState({});
 
   const { photoURL, displayName, uid } = user;
@@ -17,6 +23,27 @@ const ChatroomUser = ({ userId, admin, currentUserId }) => {
     };
     fetchUser();
   }, [userId]);
+
+  const removeUserFromChatroom = async () => {
+    const batch = firestore.batch();
+
+    const chatroomRef = firestore.doc(`chatrooms/${chatroomId}`);
+    const userRef = firestore.doc(`users/${userId}`);
+
+    try {
+      batch.update(chatroomRef, {
+        authorisedUsers: firebase.firestore.FieldValue.arrayRemove(userId),
+      });
+
+      batch.update(userRef, {
+        authorisedChatRooms: firebase.firestore.FieldValue.arrayRemove(
+          chatroomId
+        ),
+      });
+
+      batch.commit();
+    } catch (error) {}
+  };
 
   return (
     <>
@@ -29,7 +56,7 @@ const ChatroomUser = ({ userId, admin, currentUserId }) => {
           <div className="admin-tag">admin</div>
         ) : (
           currentUserId === admin && (
-            <div className="delete-icon">
+            <div className="delete-icon" onClick={removeUserFromChatroom}>
               <DeleteIcon />
             </div>
           )
@@ -42,6 +69,7 @@ const ChatroomUser = ({ userId, admin, currentUserId }) => {
 
 const mapStateToProps = createStructuredSelector({
   currentUserId: selectCurrentUserId,
+  activeChatroom: selectSetActiveChatRoom,
 });
 
 export default connect(mapStateToProps)(ChatroomUser);
