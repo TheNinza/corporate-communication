@@ -28,22 +28,25 @@ const SidebarTopSection = ({
 
   return (
     <div className="sidebar-top-section">
-      <div className="user-section">
-        <div className="profile-image-container">
-          <img className="profile-image" src={photoURL} alt="profile" />
-        </div>
-        <div className="welcome-and-signout">
-          <div className="welcome">Welcome</div>
-          <div className="user-name">{displayName}</div>
-          <div className="signout-section" onClick={signOutStart}>
-            Sign Out
+      <div className="container">
+        <div className="user-section">
+          <div className="profile-image-container">
+            <img className="profile-image" src={photoURL} alt="profile" />
+          </div>
+          <div className="welcome-and-signout">
+            <div className="welcome">Welcome</div>
+            <div className="user-name">{displayName}</div>
+            <div className="signout-section" onClick={signOutStart}>
+              Sign Out
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="new-chat" onClick={createNewChat}>
-        <NewChatSvg className="new-chat-svg" />
+        <div className="new-chat" onClick={createNewChat}>
+          <NewChatSvg className="new-chat-svg" />
+        </div>
       </div>
+      <div className="uid">User Id: {uid}</div>
     </div>
   );
 };
