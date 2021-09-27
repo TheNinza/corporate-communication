@@ -4,12 +4,12 @@ import "firebase/firestore";
 
 // config data for firebase. This section can be pulic
 const firebaseConfig = {
-  apiKey: "AIzaSyDtyGGyclEqKnfsEyHHi784Hm0ADDQjaSc",
-  authDomain: "corporate-comms.firebaseapp.com",
-  projectId: "corporate-comms",
-  storageBucket: "corporate-comms.appspot.com",
-  messagingSenderId: "393604605042",
-  appId: "1:393604605042:web:b4693c89b77b2b7c460eeb",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSANGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
 // Initialising firebase
